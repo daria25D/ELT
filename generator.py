@@ -13,9 +13,6 @@ class GeneratorThread(threading.Thread):
         self.log_file_name = log_file_name
         # establish connection to Redis
         self.r = redis.Redis(host=HOST, port=6379, db=0)
-        self.redis_id = REDIS_QUEUE
-        if self.r.exists(self.redis_id):  # some leftovers
-            self.r.delete(self.redis_id)
 
     def generate_temperatures(self, batch_num=0):
         temperatures = []
@@ -33,14 +30,14 @@ class GeneratorThread(threading.Thread):
 
     def send_data_to_redis(self, key_time, temperatures):
         try:
-            if not self.stopped(): # do not record last batch of data generated on interrupt ?
+            if not self.stopped():  # do not record last batch of data generated on interrupt ?
                 print(key_time, *temperatures)
                 self.r.lpush(key_time, *temperatures)
         except redis.ConnectionError:
             print("Redis connection lost")
 
     def run(self):
-        self.log_file = open(self.log_file_name, "w", 1) # flush data
+        self.log_file = open(self.log_file_name, "w", 1)  # flush data
         batch_num = 1
         while not self.stopped():
             self.generate_temperatures(batch_num)
