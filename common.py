@@ -10,3 +10,5 @@ FLUSH_PERIOD = 5
 GEN_LOG_FILE = 'log_gen.txt'
 
 HOST = 'localhost'
+
+DB = 'test_db.sqlite'

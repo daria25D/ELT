@@ -1,18 +1,14 @@
 from common import GEN_LOG_FILE, HOST
 from generator import GeneratorThread
 from broker import BrokerThread
-from typing import Union
-from datetime import datetime
-import random
 import redis
 import sys
-import threading
-import time
 
 
-def wait_thread_end(t: Union[GeneratorThread, BrokerThread]):
+def wait_threads_end(g: GeneratorThread, b: BrokerThread):
     try:
-        t.join()
+        g.join()
+        b.join()
     except KeyboardInterrupt:
         print('Interrupted')
         try:
@@ -20,7 +16,8 @@ def wait_thread_end(t: Union[GeneratorThread, BrokerThread]):
         except SystemExit:
             sys.exit(1)
     finally:
-        t.stop()
+        g.stop()
+        b.stop()
 
 
 def delete_old_data():
@@ -36,8 +33,7 @@ def main():
     gen_thread.start()
     broker_thread = BrokerThread()
     broker_thread.start()
-    wait_thread_end(gen_thread)
-    wait_thread_end(broker_thread)
+    wait_threads_end(gen_thread, broker_thread)
 
 
 if __name__ == '__main__':
