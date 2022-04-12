@@ -32,7 +32,7 @@ class GeneratorThread(threading.Thread):
     def send_data_to_redis(self, key_time, temperatures):
         try:
             if not self.stopped():  # do not record last batch of data generated on interrupt ?
-                print(key_time, *temperatures)
+                print('Data to push: ', key_time, *temperatures)
                 self.r.set(key_time, json.dumps(temperatures)) # for better handling of decoding
         except redis.ConnectionError:
             print("Redis connection lost")
