@@ -28,32 +28,29 @@ class BrokerThread(threading.Thread):
 
     def create_db(self):
         cursor = self.con.cursor()
-        # fix: uncomment
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS test ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             "time TEXT NOT NULL,"
             "temp1 INTEGER NOT NULL,"
             "temp2 INTEGER NOT NULL,"
-            "temp3 INTEGER NOT NULL)"
-            # "temp4 INTEGER NOT NULL,"
-            # "temp5 INTEGER NOT NULL,"
-            # "temp6 INTEGER NOT NULL,"
-            # "temp7 INTEGER NOT NULL,"
-            # "temp8 INTEGER NOT NULL,"
-            # "temp9 INTEGER NOT NULL,"
-            # "temp10 INTEGER NOT NULL)"
+            "temp3 INTEGER NOT NULL,"
+            "temp4 INTEGER NOT NULL,"
+            "temp5 INTEGER NOT NULL,"
+            "temp6 INTEGER NOT NULL,"
+            "temp7 INTEGER NOT NULL,"
+            "temp8 INTEGER NOT NULL,"
+            "temp9 INTEGER NOT NULL,"
+            "temp10 INTEGER NOT NULL)"
         )
         self.con.commit()
 
     def push_data_to_db(self, key, values):
         cursor = self.con.cursor()
         data = (key, *values)
-        # fix: test(time,temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp8,temp9,temp10)
-        # fix: VALUES(?,?,?,?,?,?,?,?,?,?,?)
         cursor.execute(
-            '''INSERT INTO test(time,temp1,temp2,temp3)
-              VALUES(?,?,?,?)''', data
+            '''INSERT INTO test(time,temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp8,temp9,temp10)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?)''', data
         )
         self.con.commit()
 

@@ -1,6 +1,6 @@
 # Constants
 
-BATCH = 3
+BATCH = 10
 
 MAX_TEMP = 100
 MIN_TEMP = 0
