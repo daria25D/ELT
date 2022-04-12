@@ -23,13 +23,13 @@ class BrokerThread(threading.Thread):
 
     def drop_old_db(self):
         cursor = self.con.cursor()
-        cursor.execute("DROP TABLE IF EXISTS test")
+        cursor.execute("DROP TABLE IF EXISTS temps")
         self.con.commit()
 
     def create_db(self):
         cursor = self.con.cursor()
         cursor.execute(
-            "CREATE TABLE IF NOT EXISTS test ("
+            "CREATE TABLE IF NOT EXISTS temps ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             "time TEXT NOT NULL,"
             "temp1 INTEGER NOT NULL,"
@@ -49,7 +49,7 @@ class BrokerThread(threading.Thread):
         cursor = self.con.cursor()
         data = (key, *values)
         cursor.execute(
-            '''INSERT INTO test(time,temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp8,temp9,temp10)
+            '''INSERT INTO temps(time,temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp8,temp9,temp10)
               VALUES(?,?,?,?,?,?,?,?,?,?,?)''', data
         )
         self.con.commit()

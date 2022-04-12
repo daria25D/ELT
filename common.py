@@ -11,4 +11,4 @@ GEN_LOG_FILE = 'log_gen.txt'
 
 HOST = 'localhost'
 
-DB = 'test_db.sqlite'
+DB = 'temp_db.sqlite'

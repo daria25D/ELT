@@ -10,7 +10,7 @@ def main():
                  FROM
                  (
                      SELECT id, time, MAX(temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10)
-                     AS temp FROM test
+                     AS temp FROM temps
                  )'''
         cursor.execute(sql)
         rows = cursor.fetchall()
