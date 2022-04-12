@@ -2,6 +2,10 @@ import sqlite3
 from common import DB
 
 
+def print_max_info(r):
+    print(f'Found max temperature at id _{r[0]}_ and time _{r[1]}_: {r[2]}')
+
+
 def main():
     try:
         con = sqlite3.connect(DB)
@@ -15,7 +19,7 @@ def main():
         cursor.execute(sql)
         rows = cursor.fetchall()
         for r in rows:
-            print(r)
+            print_max_info(r)
     except sqlite3.Error as e:
         print(f'Fail at client: {e}')
     finally:
