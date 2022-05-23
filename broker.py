@@ -60,16 +60,15 @@ class BrokerThread(threading.Thread):
             print('Start transferring data')
             data = {}
             for key in self.r.scan_iter('*'):
-                print(key)
                 r_list = json.loads(self.r.get(key))
                 data[key] = r_list
                 self.r.delete(key)
-            print(data)
             try:
                 self.con = sqlite3.connect(DB)
                 self.con.isolation_level = 'EXCLUSIVE'
                 self.con.execute('BEGIN EXCLUSIVE')
                 with self.con:
+                    # time.sleep(2) # can be used to notice locking of db for client
                     for key in sorted(data.keys()):
                         self.push_data_to_db(key, data[key])
             except sqlite3.Error as e:
